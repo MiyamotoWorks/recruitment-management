@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>候補者詳細</title>
+</head>
+<body>
+
+    <h1>候補者詳細</h1>
+
+    <p>
+        <strong>氏名：</strong>
+        <span th:text="${candidate.name}"></span>
+    </p>
+
+    <p>
+        <strong>応募職種：</strong>
+        <span th:text="${candidate.position}"></span>
+    </p>
+
+    <p>
+        <strong>選考状況：</strong>
+        <span th:text="${candidate.status}"></span>
+    </p>
+
+    <br>
+
+    <a href="/candidates">候補者一覧へ戻る</a>
+
+</body>
+</html>
