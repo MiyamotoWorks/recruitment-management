@@ -43,19 +43,19 @@ Java / Spring Bootで作成した、採用候補者の選考状況を管理す�
 
 選考状況を指定して、候補者を絞り込むことができます。
 
-![候補者一覧](docs/images/候補者一覧.png)
+<img src="docs/images/候補者一覧.png" width="67%">
 
 ### 候補者詳細
 
 候補者の登録内容を確認できます。
 
-![候補者詳細](docs/images/候補者詳細.png)
+<img src="docs/images/候補者詳細.png" width="67%">
 
 ### 候補者編集
 
 候補者の氏名、応募職種、選考状況を編集できます。
 
-![候補者編集](docs/images/候補者編集.png)
+<img src="docs/images/候補者編集.png" width="67%">
 
 氏名が未入力の場合は、バリデーションエラーを表示します。
 
