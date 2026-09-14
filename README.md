@@ -115,14 +115,3 @@ private String name;
 ### 4. MVCの構成を意識した実装
 
 Controller、Entity、Repository、Viewを分けて実装し、Spring Bootの基本的なWebアプリケーション構成を学習しました。
-
-
-## 制作目的
-
-Java / Spring Bootを使用したWebアプリケーション開発の学習のため制作しました。
-
-データベース連携、バリデーション、検索処理など、Webアプリケーション開発の基本的な流れを一通り実装しています。
-
-## GitHub
-
-このリポジトリでソースコードを公開しています。
