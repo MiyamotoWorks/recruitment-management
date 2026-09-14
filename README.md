@@ -17,7 +17,7 @@ Java / Spring Bootで作成した、採用候補者の選考状況を管理す�
 * Thymeleaf
 * MariaDB 12.3
 * Maven
-* HTML / CSS
+* HTML
 
 ## 主な機能
 
