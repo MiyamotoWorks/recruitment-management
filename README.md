@@ -116,14 +116,6 @@ private String name;
 
 Controller、Entity、Repository、Viewを分けて実装し、Spring Bootの基本的なWebアプリケーション構成を学習しました。
 
-## 今後追加したい機能
-
-* CSSによる画面デザインの改善
-* ページネーション
-* 応募日・面接日などの日付管理
-* 候補者情報の入力項目追加
-* テストコードの拡充
-* AWSなどへのデプロイ
 
 ## 制作目的
 
