@@ -74,6 +74,16 @@ Spring Data JPA
    ↓
 MariaDB
 ```
+## 主なファイル
+
+| ファイル                       | 役割                      |
+| -------------------------- | ----------------------- |
+| `Candidate.java`           | 候補者データの定義               |
+| `CandidateRepository.java` | データベースの候補者データを取得・保存・削除  |
+| `HomeController.java`      | ブラウザからのリクエストを受け取り、処理を行う |
+| `candidates.html`          | 候補者一覧を表示                |
+| `candidate-form.html`      | 候補者の登録・編集画面             |
+
 
 ## データベース
 
