@@ -124,6 +124,3 @@ private String name;
 
 候補者IDの有無によって、同じフォームを登録・編集の両方で利用できるようにしました。
 
-### 4. MVCの構成を意識した実装
-
-Controller、Entity、Repository、Viewを分けて実装し、Spring Bootの基本的なWebアプリケーション構成を学習しました。
