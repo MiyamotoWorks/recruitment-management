@@ -30,19 +30,22 @@ public class HomeController {
     @GetMapping("/candidates")
     public String candidates(
             @RequestParam(required = false) String status,
-            Model model) {
-
+            Model model,
+            HttpSession session) {
+        // ログインユーザーをSessionから取得
+        String loginUser = (String) session.getAttribute("loginUser");
+        // ログインしていなければログイン画面へ戻す
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
         List<Candidate> candidates;
-
         if (status == null || status.isEmpty()) {
             candidates = candidateRepository.findAll();
         } else {
             candidates = candidateRepository.findByStatus(status);
         }
-
         model.addAttribute("candidates", candidates);
         model.addAttribute("selectedStatus", status);
-
         return "candidates";
     }
 
