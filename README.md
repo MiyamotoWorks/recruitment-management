@@ -1,12 +1,43 @@
 # 採用管理システム
 
-Java / Spring Bootで作成した、採用候補者の選考状況を管理するWebアプリケーションです。
+Java / Spring Boot / MariaDBを使用して作成した、候補者情報を管理するWebアプリケーションです。
 
 ## 概要
 
-候補者の氏名・応募職種・選考状況を登録し、一覧表示・検索・詳細確認・編集・削除ができるシステムを作成しました。
+採用担当者が候補者情報を登録・検索・編集・削除できる採用管理システムを作成しました。
 
-プログラミング学習の一環として、以前学習した採用管理システムをJava / Spring Bootで再構築したポートフォリオです。
+ログイン機能とユーザー権限（ADMIN / USER）を実装し、権限に応じて候補者情報を操作できる範囲を制御しています。
+
+## 主な機能
+
+### ログイン機能
+
+* ユーザー名・パスワードによるログイン
+* MariaDBに保存したユーザー情報を使用
+* HttpSessionによるログイン状態の管理
+* ログアウト機能
+
+### ユーザー権限
+
+| 権限    | 一覧・詳細 | 新規登録 | 編集 | 削除 |
+| ----- | ----- | ---- | -- | -- |
+| ADMIN | ○     | ○    | ○  | ○  |
+| USER  | ○     | ×    | ×  | ×  |
+
+* ログイン時にDBからユーザー情報を取得
+* ADMIN / USERの権限をSessionに保存
+* Controller側で権限を確認し、操作を制御
+* Thymeleafの条件分岐により、権限に応じて操作ボタンを表示
+
+### 候補者管理
+
+* 候補者一覧表示
+* 選考状況による検索
+* 候補者詳細表示
+* 候補者登録
+* 候補者情報編集
+* 候補者削除
+* 入力値バリデーション
 
 ## 使用技術
 
@@ -15,143 +46,78 @@ Java / Spring Bootで作成した、採用候補者の選考状況を管理す�
 * Spring MVC
 * Spring Data JPA
 * Thymeleaf
-* MariaDB 12.3
+* MariaDB
 * Maven
-* HttpSession
 * HTML
+* Git / GitHub
+* VS Code
 
-## 主な機能
+## 主なJava・Springの学習内容
 
-* 候補者一覧表示
-* 候補者登録
-* 候補者詳細表示
-* 候補者編集
-* 候補者削除
-* 選考状況による検索
-* 入力値バリデーション
-* バリデーションエラー表示
-* MariaDBへのデータ保存
-* ログイン機能
-* ログアウト機能
-* セッションによるログイン状態の管理
-
-## 画面
-
-### トップページ
-
-採用管理システムのトップページから、候補者一覧や新規登録画面へ移動できます。
-
-### 候補者一覧
-
-登録されている候補者を一覧表示します。
-
-選考状況を指定して、候補者を絞り込むことができます。
-
-<img src="docs/images/候補者一覧.png" width="67%">
-
-
-
-### 候補者詳細
-
-候補者の登録内容を確認できます。
-
-<img src="docs/images/候補者詳細.png" width="67%">
-
-
-
-
-### 候補者編集
-
-候補者の氏名、応募職種、選考状況を編集できます。
-
-<img src="docs/images/候補者編集.png" width="67%">
-
-氏名が未入力の場合は、バリデーションエラーを表示します。
-
-
-
-
-
-### ログイン画面
-
-ユーザー名を入力してログインできます。
-ログイン後は候補者一覧画面へ移動します。
-
-<img src="docs/images/ログイン.png" width="45%">
-
-
+* クラス・オブジェクト
+* コンストラクタ
+* インスタンス化（`new`）
+* カプセル化（getter / setter）
+* 継承・インターフェース
+* ジェネリクス
+* `List`
+* `Optional`
+* Stream API
+* アノテーション
+* Spring MVCのController
+* Spring Data JPAのRepository
+* EntityによるDBデータのオブジェクト化
+* コンストラクタインジェクション
+* HttpSessionによるログイン状態・権限管理
 
 ## アプリケーション構成
 
 ```text
-ブラウザ
-   ↓
-HTML / Thymeleaf
-   ↓
-Spring Boot / Spring MVC
-   ↓
-Java
-   ↓
-Spring Data JPA
-   ↓
-MariaDB
+src
+└─ main
+   ├─ java
+   │  └─ com.example.recruitment_management
+   │     ├─ Candidate.java
+   │     ├─ CandidateRepository.java
+   │     ├─ HomeController.java
+   │     ├─ User.java
+   │     ├─ UserRepository.java
+   │     └─ LoginController.java
+   │
+   └─ resources
+      └─ templates
+         ├─ index.html
+         ├─ login.html
+         ├─ candidates.html
+         ├─ candidate-form.html
+         └─ candidate-detail.html
 ```
-## ファイル役割
 
-| **MVC**        | **ファイル**                   | **役割**                  |
-| -------------- | -------------------------- | ----------------------- |
-| **Entity**     | `Candidate.java`           | 候補者データを定義               |
-| **Repository** | `CandidateRepository.java` | DBの候補者データを取得・保存・更新・削除   |
-| **Controller** | `HomeController.java`      | ブラウザからのリクエストを受け取り、処理を行う |
-| **Controller** | `LoginController.java` | ログイン・ログアウト処理を行う |
-| **View**       | `login.html` | ログイン画面を表示 |
-| **View**       | `candidates.html`          | 候補者一覧を表示                |
-| **View**       | `candidate-form.html`      | 候補者の登録・編集画面を表示          |
-| **View**       | `candidate-detail.html`    | 候補者の詳細画面を表示             |
-| **View**       | `candidate-detail.html`    | 候補者の詳細画面を表示             |
+## 権限制御の仕組み
 
-
-
-
-## データベース
-
-データベースにはMariaDBを使用しています。
-
-主なテーブル：
+ログイン時にDBからユーザー情報を取得し、権限をSessionに保存します。
 
 ```text
-candidate
-├── id
-├── name
-├── position
-└── status
+ログイン
+   ↓
+UserRepository
+   ↓
+MariaDBからUserを取得
+   ↓
+username / passwordを確認
+   ↓
+role（ADMIN / USER）をSessionへ保存
+   ↓
+候補者一覧
+   ↓
+Controllerでroleを確認
+   ↓
+ADMIN → 登録・編集・削除可能
+USER  → 閲覧のみ
 ```
 
-## 工夫した点
+また、画面上で操作ボタンを非表示にするだけではなく、Controller側でも権限を確認することで、USERがURLを直接入力して操作するケースにも対応しています。
 
-### 1. 選考状況による検索
+## 学習目的
 
-Spring Data JPAのメソッドを利用し、選考状況に応じて候補者を絞り込めるようにしました。
-
-```java
-List<Candidate> findByStatus(String status);
-```
-
-### 2. 入力値バリデーション
-
-候補者名を必須項目とし、未入力の場合はエラーメッセージを表示するようにしました。
-
-```java
-@NotBlank(message = "氏名を入力してください")
-private String name;
-```
-
-### 3. 登録と編集でフォームを共通化
-
-候補者IDの有無によって、同じフォームを登録・編集の両方で利用できるようにしました。
-
-
-### 4. セッションによるログイン状態の管理
-
-HttpSessionを利用してログインユーザーの情報をセッションに保存し、
-ログイン後の画面遷移とログアウト処理を実装しました。
+Javaの基本文法だけでなく、Spring Bootを使用したWebアプリケーション開発、DBとの連携、ログイン・セッション管理、ユーザー権限制御までを実際に実装することを目的として作成しました。

@@ -65,15 +65,19 @@
                         詳細
                     </a>
 
-                    <a th:href="@{/candidates/{id}/edit(id=${candidate.id})}">
-                        編集
-                    </a>
+                    <span th:if="${role == 'ADMIN'}">
 
-                    <form th:action="@{/candidates/{id}/delete(id=${candidate.id})}"
-                          method="post"
-                          style="display:inline;">
-                        <button type="submit">削除</button>
-                    </form>
+                        <a th:href="@{/candidates/{id}/edit(id=${candidate.id})}">
+                            編集
+                        </a>
+
+                        <form th:action="@{/candidates/{id}/delete(id=${candidate.id})}"
+                            method="post"
+                            style="display:inline;">
+                            <button type="submit">削除</button>
+                        </form>
+
+                    </span>
                 </td>
             </tr>
         </tbody>

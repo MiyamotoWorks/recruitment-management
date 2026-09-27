@@ -11,7 +11,9 @@
     <p>候補者情報を管理するWebアプリケーションです。</p>
 
     <a href="/candidates">候補者一覧</a>
-    <a href="/candidates/new">候補者を登録</a>
+    <span th:if="${role == 'ADMIN'}">
+        <a href="/candidates/new">候補者を登録</a>
+    </span>
 
 </body>
 </html>

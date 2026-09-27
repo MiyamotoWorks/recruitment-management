@@ -20,20 +20,15 @@ public class UserController {
     // 登録画面を表示
     @GetMapping("/users/new")
     public String newUser(Model model) {
-
         User user = new User();
-
         model.addAttribute("user", user);
-
         return "users/new";
     }
 
     // 登録ボタンが押されたとき
     @PostMapping("/users")
     public String createUser(@ModelAttribute User user) {
-
         userRepository.save(user);
-
         return "redirect:/users/new";
     }
 }

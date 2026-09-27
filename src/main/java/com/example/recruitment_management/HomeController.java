@@ -46,11 +46,21 @@ public class HomeController {
         }
         model.addAttribute("candidates", candidates);
         model.addAttribute("selectedStatus", status);
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        model.addAttribute("role", role);
+        System.out.println("LOGIN ROLE = " + role);
         return "candidates";
     }
 
     @GetMapping("/candidates/new")
-    public String newCandidate(Model model) {
+    public String newCandidate(Model model, HttpSession session) {
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        // ADMIN以外なら候補者一覧へ戻す
+        if (!"ADMIN".equals(role)) {
+            return "redirect:/candidates";
+        }
         model.addAttribute("candidate", new Candidate());
         return "candidate-form";
     }
@@ -66,24 +76,36 @@ public class HomeController {
     }
 
     @GetMapping("/candidates/{id}/edit")
-    public String editCandidate(@PathVariable Long id, Model model) {
+    public String editCandidate(
+            @PathVariable Long id,
+            Model model,
+            HttpSession session) {
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        // ADMIN以外なら候補者一覧へ戻す
+        if (!"ADMIN".equals(role)) {
+            return "redirect:/candidates";
+        }
         Candidate candidate = candidateRepository.findById(id)
                 .orElseThrow();
-
         model.addAttribute("candidate", candidate);
-
         return "candidate-form";
-    }   
+    }
 
     @PostMapping("/candidates")
     public String createCandidate(
             @Valid Candidate candidate,
-            BindingResult bindingResult) {
-
+            BindingResult bindingResult,
+            HttpSession session) {
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        // ADMIN以外なら候補者一覧へ戻す
+        if (!"ADMIN".equals(role)) {
+            return "redirect:/candidates";
+        }
         if (bindingResult.hasErrors()) {
             return "candidate-form";
         }
-
         candidateRepository.save(candidate);
         return "redirect:/candidates";
     }
@@ -92,30 +114,38 @@ public class HomeController {
     public String updateCandidate(
             @PathVariable Long id,
             @Valid @ModelAttribute("candidate") Candidate candidate,
-            BindingResult bindingResult) {
-
+            BindingResult bindingResult,
+            HttpSession session) {
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        // ADMIN以外なら候補者一覧へ戻す
+        if (!"ADMIN".equals(role)) {
+            return "redirect:/candidates";
+        }
         if (bindingResult.hasErrors()) {
-            System.out.println("VALIDATION ERROR");
             return "candidate-form";
         }
-
         Candidate existingCandidate = candidateRepository.findById(id)
                 .orElseThrow();
-
         existingCandidate.setName(candidate.getName());
         existingCandidate.setPosition(candidate.getPosition());
         existingCandidate.setStatus(candidate.getStatus());
-
         candidateRepository.save(existingCandidate);
-
         return "redirect:/candidates";
     }
 
     @PostMapping("/candidates/{id}/delete")
-    public String deleteCandidate(@PathVariable Long id) {
-
+    public String deleteCandidate(
+            @PathVariable Long id,
+            HttpSession session) {
+        // Sessionから権限を取得
+        String role = (String) session.getAttribute("role");
+        // ADMIN以外なら候補者一覧へ戻す
+        if (!"ADMIN".equals(role)) {
+            return "redirect:/candidates";
+        }
+        // ADMINなら削除
         candidateRepository.deleteById(id);
-
         return "redirect:/candidates";
     }
 

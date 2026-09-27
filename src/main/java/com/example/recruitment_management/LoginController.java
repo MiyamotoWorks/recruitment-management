@@ -40,6 +40,8 @@ public class LoginController {
             if (foundUser.getPassword().equals(password)) {
                 // Sessionにログインユーザーを保存
                 session.setAttribute("loginUser", username);
+                // Sessionに権限を保存
+                session.setAttribute("role", foundUser.getRole());
                 // candidates画面へ
                 return "redirect:/candidates";
             }
@@ -49,13 +51,13 @@ public class LoginController {
         // login.htmlをもう一度表示
         return "login";
     }
-    
+
     // ログアウト処理
     @GetMapping("/logout")
     public String logout(HttpSession session) {
 
-        // Sessionからログインユーザーを削除
-        session.removeAttribute("loginUser");
+        // Sessionそのものを破棄
+        session.invalidate();
 
         return "redirect:/login";
     }
